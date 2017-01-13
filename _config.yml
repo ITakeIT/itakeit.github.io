@@ -2,7 +2,7 @@
 #   Main Configs   #
 # ---------------- #
 baseurl:
-url: http://mazhuang.org
+url: http://triangleidea.com
 date_format: "ordinal"
 title: ITriangle
 subtitle: "Do Myself"
@@ -17,8 +17,8 @@ side_bar_repo_limit: 5
 #      Author      #
 # ---------------- #
 author: San Jiao
-organization: Sogou, Inc.
-organization_url: https://www.sogou.com
+organization: Seentech, Inc.
+organization_url: https://triangleidea.com
 location: Beijing, China
 email: jiaotriangle@gmail.com
 
