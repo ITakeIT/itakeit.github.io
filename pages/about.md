@@ -22,7 +22,7 @@ permalink: /about/
 * GitHub：[@ITriangle](https://github.com/ITriangle)
 * 掘金：[@ITriangle](https://github.com/ITriangle)
 * LinkedIn：[@ITriangle](https://github.com/ITriangle)
-* 博客：[{{ site.title }}]({{ site.url }})
+* 博客：[@{{ site.title }}]({{ site.url }})
 * 微博: [@ITriangle](https://github.com/ITriangle)
 * 知乎: [@ITriangle](https://github.com/ITriangle)
 * 豆瓣: [@ITriangle](https://github.com/ITriangle)

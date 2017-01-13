@@ -1,6 +1,6 @@
-# 码志
+# 三角
 
-我的个人博客：<http://mazhuang.org>，欢迎 Star 和 Fork。
+我的个人博客：<http://triangleidea.com/>，欢迎 Star 和 Fork。
 
 ## 概览
 
@@ -49,6 +49,28 @@ Fork 本项目之后，还需要做一些事情才能让你的页面「正确」
 5. 修改「关于」页面。
 
    pages/about.md 文件内容对应网站的「关于」页面，里面的内容多为个人相关，将它们替换成你自己的信息。
+
+## 发布博文
+
+博文的模板样式如下
+```
+---
+layout: post
+title: template page
+categories: [cate1, cate2]
+description: some word here
+keywords: keyword1, keyword2
+---
+
+Content here
+```
+
+- layout : 格式
+- title: 标题
+- categories: 分类 `[cate1, cate2]`, 可以一个或者多个
+- description: 描述
+- keywords: 关键字 `keyword1, keyword2`, 可以一个或者多个
+- 文件名格式: `2016-12-14-NAME.md` 对应 `http://triangleidea.com/2016/12/14/NAME/`
 
 ## 贴心提示
 
