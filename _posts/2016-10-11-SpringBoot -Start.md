@@ -110,6 +110,7 @@ PS:`spring-boot-starter-parent` POM 包含绑定到repackage目标的<executions
 
 ### 运行 `jar` 包 
 在工程目录下运行一下命令:
+
 1. 打包jar
 
 ```
