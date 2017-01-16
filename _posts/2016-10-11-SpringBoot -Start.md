@@ -1,109 +1,114 @@
 ---
 layout: post
-title: ES 聚合
+title: SpringBoot 快速入门
 categories: SpringBoot
-description: ES 在实际中的作用是越来越强了
+description: Spring Boot 作为Spring 配置的简化项目,具有很强的实用性
 keywords: SpringBoot,Start
 ---
+[TOC]
 
-## 聚合[API](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html)  
+## 任务目标
+用Maven构建Spring Boot基础项目，并且实现一个简单的Http请求处理，通过这个例子对Spring Boot有一个初步的了解，并体验其结构简单、开发快速的特性。
 
-聚合的作用:**统计数据集合的各项参数指标**  
+## 一.Maven构建项目
+1. 通过`SPRING INITIALIZR`[工具产生基础项目](http://start.spring.io/),`Spring Boot`版本`1.3.8`
+2. 解压后,IDE导入工程
 
-- bucketing API的使用:得到数据集合
-- metric API的使用:统计指定数据集合中类属性的各项参数指标  
 
-### 聚合API
+
+## 二.项目结构
 ```
-"aggregations" : {                  // 表示聚合操作，可以使用aggs替代
-    "<aggregation_name>" : {        // 聚合名，可以是任意的字符串。用做数据集合参数值对应的key，便于快速取得正确的响应数据。
-        "<aggregation_type>" : {    // 聚合指标，数据集合的参数指标，如min取最小,terms分组
-            <aggregation_body>      // 聚合体,数据集合中需要求参数的具体字段,排布方式,等属性要求
-        }
-        [,"aggregations" : { [<sub_aggregation>]+ } ] // 嵌套的子聚合，可以有0或多个
+com
+  +- example
+    +- myproject
+      +- Application.java
+      |
+      +- domain
+      |  +- Customer.java
+      |  +- CustomerRepository.java
+      |
+      +- service
+      |  +- CustomerService.java
+      |
+      +- web
+      |  +- CustomerController.java
+      |
+```
+- root package结构：com.example.myproject
+- 应用主类Application.java置于root package下，通常我们会在应用主类中做一些框架配置扫描等配置，我们放在root package下可以帮助程序减少手工配置来加载到我们希望被Spring加载的内容
+- 实体（Entity）与数据访问层（Repository）置于com.example.myproject.domain包下
+- 逻辑层（Service）置于com.example.myproject.service包下
+- Web层（web）置于com.example.myproject.web包下
+
+## 三.编写实例:
+Spring Boot 是完全遵从Spring的启动原则的,只是优化了配置(约定优先于配置)
+
+创建`Example` 类，内容如下:
+```java
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@EnableAutoConfiguration
+public class Example {
+
+    @RequestMapping("/")
+    String home() {
+        return "Hello World!";
     }
-    [,"<aggregation_name_2>" : { ... } ]* // 另外的聚合，可以有0或多个
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(Example.class, args);
+    }
+
 }
 ```
+启动主程序，打开浏览器访问`http://localhost:8080`，可以看到页面输出Hello World
 
-### 度量类型（metric）聚合
-- `min`:数据集合,指定属性的最小值
-- `max`:数据集合,指定属性的最大值
-- `sum`:数据结合,指定属性的总和
-- `avg`:数据集合,指定属性的平均值
-- `stats`:数据集合,指定属性的基础参数 
-- `grade_stats`:数据集合,指定属性的增强参数
-- `cardinality`:数据集合,指定属性去重
-- `percentiles`:数据集合,指定属性的所占的百分比
-- `top_hits`:数据集合,指定属性的前n条数据
+## 四.启动说明
+### 1. 注解配置
+`@RestController`  
 
-### 桶类型（bucketing）聚合   
+`@EnableAutoConfiguration`
 
-#### Terms Aggregation
-按照指定的1或多个字段将数据划分成若干个小的区间，计算落在每一个区间上记录数量，并按指定顺序进行排序。下面统计每个班的学生数，并按学生数从大到小排序，取学生数靠前的2个班级。
+`@RequestMapping`
 
+
+### 2. 启动流程
+1. 程序入口`main`
+2. `main`方法通过调用`run`，将业务委托给了`Spring Boot`的`SpringApplication`类
+3. `SpringApplication`将引导应用启动:
+    1. 启动Spring
+    2. 相应地启动被自动配置的Tomcat web服务器
+4. `Example.class`作为参数传递给`run`方法，**以此告诉SpringApplication谁是主要的Spring组件**，并传递`args`数组以暴露所有的命令行参数。
+
+## 五.创建可运行的`jar`
+为了创建可执行的jar，我们需要将spring-boot-maven-plugin添加到pom.xml中，在dependencies节点后面插入以下内容：
 ```
-curl -XPOST "192.168.1.101:9200/student/student/_search?search_type=count" -d 
-'
-{
-  "aggs": {
-    "terms_classNo": {
-      "terms": {
-        "field": "classNo",            // 按照班号进行分组 
-        "order": { "_count": "desc"},  // 按学生数从大到小排序
-        "size": 2                      // 取前两名
-      }
-    }
-  }
-}
-'
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build>
 ```
+PS:`spring-boot-starter-parent` POM 包含绑定到repackage目标的<executions>配置。如果不使用parent POM，你需要自己声明该配置，具体参考[插件文档](http://docs.spring.io/spring-boot/docs/1.4.1.BUILD-SNAPSHOT/maven-plugin/usage.html)。
 
-#### Range Aggregation
-自定义区间范围的聚合，我们可以自己手动地划分区间，ES会根据划分出来的区间将数据分配不同的区间上去。
-
-#### Date Range Aggregation
-时间区间聚合专门针对date类型的字段，它与Range Aggregation的主要区别是其可以使用时间运算表达式。主要包括+（加法）运算、-（减法）运算和/（四舍五入）运算，每种运算都可以作用在不同的时间域上面，下面是一些时间运算表达式示例。
-
-now+10y：表示从现在开始的第10年。
-now+10M：表示从现在开始的第10个月。
-1990-01-10||+20y：表示从1990-01-01开始后的第20年，即2010-01-01。
-now/y：表示在年位上做舍入运算。今天是2015-09-06，则这个表达式计算结果为：2015-01-01。
-
-#### Histogram Aggregation
-直方图聚合，它将某个number类型字段等分成n份，统计落在每一个区间内的记录数。它与前面介绍的Range聚合非常像，只不过Range可以任意划分区间，而Histogram做等间距划分。既然是等间距划分，那么参数里面必然有距离参数，就是interval参数。
-
-#### Date Histogram Aggregation
-时间直方图聚合，专门对时间类型的字段做直方图聚合。这种需求是比较常用见得的，我们在统计时，通常就会按照固定的时间断（1个月或1年等）来做统计。
-
-#### Missing Aggregation
-值缺损聚合，它是一类单桶聚合，也就是最终只会产生一个“桶”。
-
-
-## 嵌套使用
-聚合操作是可以嵌套使用的。通过嵌套，可以使得metric类型的聚合操作作用在每一“桶”上。我们可以使用ES的嵌套聚合操作来完成稍微复杂一点的统计功能。下面统计每一个班里最大的年龄值。  
-
+### 运行 `jar` 包 
+在工程目录下运行一下命令:
+1. 打包jar
 ```
-curl -XPOST "192.168.1.101:9200/student/student/_search?search_type=count" -d
-'
-{
-  "aggs": {
-    "missing_address": {
-      "terms": {
-        "field": "classNo"
-      },
-      "aggs": {                 // 在这里嵌套新的子聚合
-        "max_age": {
-          "max": {              // 使用max聚合
-            "field": "age"
-          }
-        }
-      }
-    }
-  }
-}
-'
+mvn package
+```
+2. 运行jar
+```
+java -jar target/myproject-0.0.1-SNAPSHOT.jar
 ```
 
 ## 参考链接
-[实时搜索引擎Elasticsearch（4）——Aggregations （聚合）API的使用](http://blog.csdn.net/xialei199023/article/details/48298635)
+1. [Spring Boot参考指南](https://qbgbook.gitbooks.io/spring-boot-reference-guide-zh/content/I.%20Spring%20Boot%20Documentation/3.%20First%20steps.html)
+2. [Spring Boot快速入门](http://blog.didispace.com/spring-boot-learning-1/)
