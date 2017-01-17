@@ -32,6 +32,7 @@ public class RelativePathUriTemplateController {
 
 
 ### 2. @RequestHeader、@CookieValue
+
 #### @RequestHeader 
 注解，可以把Request请求`header部分`的值绑定到方法的参数上。
 
@@ -67,6 +68,7 @@ public void displayHeaderInfo(@CookieValue(“JSESSIONID”) String cookie) {
 即把JSESSIONID的值绑定到参数cookie上。
 
 ### 3.@RequestParam, @RequestBody
+
 #### @RequestParam 
 1. 常用来处理简单类型的绑定，通过`Request.getParameter()` 获取的`String`可直接转换为简单类型的情况（ String –> 简单类型的转换操作由`ConversionService`配置的转换器来完成）；因为使用`request.getParameter()`方式获取参数，所以可以处理`get` 方式中`queryString`的值，也可以处理`post`方式中 `body data`的值；
 2. 用来处理Content-Type: 为 application/x-www-form-urlencoded编码的内容，提交方式GET、POST；
