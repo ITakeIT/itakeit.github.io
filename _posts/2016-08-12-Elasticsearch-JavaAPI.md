@@ -7,7 +7,8 @@ keywords: Elasticsearch,Java,API
 ---
 
 ## 任务目标
-从 Elasticsearch 中读取数据
+1. 向 Elasticsearch 写入数据
+2. 从 Elasticsearch 读出数据
 
 ## 环境:
 1. 下载 [Elasticsearch 5.1.1](https://www.elastic.co/downloads/elasticsearch)
@@ -54,35 +55,35 @@ keywords: Elasticsearch,Java,API
 
 ```java
 //设置集群名称
-        Settings settings = Settings.builder().put("cluster.name", "elasticsearch").build();
-        //创建client
-        TransportClient client = null;
-        try {
-            client = new PreBuiltTransportClient(settings)
-                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        //创建数据
-        String json = "{" +
-                "\"user\":\"kimchy\"," +
-                "\"postDate\":\"2013-01-30\"," +
-                "\"message\":\"trying out Elasticsearch\"" +
-                "}";
-        IndexResponse responseIndex = client.prepareIndex("twitter", "tweet", "1")
-                .setSource(json)
-                .get();
+Settings settings = Settings.builder().put("cluster.name", "elasticsearch").build();
+//创建client
+TransportClient client = null;
+try {
+    client = new PreBuiltTransportClient(settings)
+            .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
+} catch (UnknownHostException e) {
+    e.printStackTrace();
+}
+//创建数据
+String json = "{" +
+        "\"user\":\"kimchy\"," +
+        "\"postDate\":\"2013-01-30\"," +
+        "\"message\":\"trying out Elasticsearch\"" +
+        "}";
+IndexResponse responseIndex = client.prepareIndex("twitter", "tweet", "1")
+        .setSource(json)
+        .get();
 
-        //搜索数据
-        GetResponse responseGet = client.prepareGet("twitter", "tweet", "1").execute().actionGet();
-        //输出结果
-        System.out.println(responseGet.getSourceAsString());
-        //关闭client
-        client.close();
+//搜索数据
+GetResponse responseGet = client.prepareGet("twitter", "tweet", "1").execute().actionGet();
+//输出结果
+System.out.println(responseGet.getSourceAsString());
+//关闭client
+client.close();
 ```
 
 ## 结果验证
-输出结果如下:
+输出结果如下,与写入数据保持一致.
 
 ```
 no modules loaded
@@ -94,6 +95,7 @@ loaded plugin [org.elasticsearch.transport.Netty4Plugin]
 {"user":"kimchy","postDate":"2013-01-30","message":"trying out Elasticsearch"}
 ```
 
+[GitHub 代码链接](https://github.com/ITriangle/Elasticsearch-master/tree/master/Elasticsearch)
 
 ## 参考链接
 1. [Elasticsearch Java API](https://www.elastic.co/guide/en/elasticsearch/client/java-api/5.1/transport-client.html)
