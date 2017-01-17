@@ -111,13 +111,13 @@ PS:`spring-boot-starter-parent` POM 包含绑定到repackage目标的<executions
 ### 运行 `jar` 包 
 在工程目录下运行一下命令:
 
-1. 打包jar
+- 打包jar
 
 ```
 mvn package
 ```
 
-2. 运行jar
+- 运行jar
 
 ```
 java -jar target/myproject-0.0.1-SNAPSHOT.jar
