@@ -1,10 +1,10 @@
-<!-- ---
+---
 layout: post
 title: Index API
 categories: [Elasticsearch, Java]
 description: Elasticsearch 在实际中的作用是越来越强了
 keywords: Elasticsearch,Java,API
---- -->
+---
 
 [TOC]
 
@@ -58,7 +58,7 @@ byte[] json = mapper.writeValueAsBytes(yourbeaninstance);
 ### 4.用 Elasticsearch 内置的类
 Elasticsearch 提供了内置的类 `XContentFactory` ,帮助你去创建 JSON 文档.
 
-```Java
+```java
 import static org.elasticsearch.common.xcontent.XContentFactory.*;
 
 XContentBuilder builder = jsonBuilder()
@@ -67,6 +67,61 @@ XContentBuilder builder = jsonBuilder()
         .field("postDate", new Date())
         .field("message", "trying out Elasticsearch")
     .endObject()
+```
+
+**注意**: 你同样可以使用 `startArray(String)` 和 `endArrary()` 方法.同样的, `field` 方法接受任何对象类型. 包括: 数值,日期和其他的 `XContentBuilder` 对象.  
+
+使用 `stirng()` 方法创建 JSON String 对象: 
+
+```java
+String json = builder.string();
+```
+
+## 二.索引 JSON 文档
+下面的例子, 用 `prepareIndex` API 创建一个 JSON 文档: `index` 为 `twitter`, `type` 为 `tweet`, `id` 为 `1`
+
+```java
+import static org.elasticsearch.common.xcontent.XContentFactory.*;
+
+IndexResponse response = client.prepareIndex("twitter", "tweet", "1")
+        .setSource(jsonBuilder()
+                    .startObject()
+                        .field("user", "kimchy")
+                        .field("postDate", new Date())
+                        .field("message", "trying out Elasticsearch")
+                    .endObject()
+                  )
+        .get();
+```
+
+**注意**:你可以创建一条记录,但不说明 `id`,会以自增的方式分配一个 `id`:
+
+```java
+String json = "{" +
+        "\"user\":\"kimchy\"," +
+        "\"postDate\":\"2013-01-30\"," +
+        "\"message\":\"trying out Elasticsearch\"" +
+    "}";
+
+IndexResponse response = client.prepareIndex("twitter", "tweet")
+        .setSource(json)
+        .get();
+```
+
+## 三.获取应答状态
+`IndexResponse` 对象包含应该的信息:
+
+```java
+// Index name
+String _index = response.getIndex();
+// Type name
+String _type = response.getType();
+// Document ID (generated or not)
+String _id = response.getId();
+// Version (if it's the first time you index this document, you will get: 1)
+long _version = response.getVersion();
+// status has stored current instance statement.
+RestStatus status = response.status();
 ```
 
 ## 参考链接
