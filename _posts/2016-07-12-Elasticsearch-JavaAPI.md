@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Elasticsearch Java Client
-categories: [Elasticsearch, Java]
+categories: [Elasticsearch]
 description: Elasticsearch 在实际中的作用是越来越强了
 keywords: Elasticsearch,Java,API
 ---
