@@ -6,8 +6,6 @@ description: Elasticsearch 在实际中的作用是越来越强了
 keywords: Elasticsearch,Java,API
 ---
 
-[TOC]
-
 # Index API(索引API)
 索引 API 允许你创建自定义的 JSON 文档存储到Elasticsearch.
 
@@ -109,7 +107,7 @@ IndexResponse response = client.prepareIndex("twitter", "tweet")
 ```
 
 ## 三.获取应答状态
-`IndexResponse` 对象包含应该的信息:
+`IndexResponse` 对象包含应答的信息:
 
 ```java
 // Index name
