@@ -5,7 +5,7 @@ baseurl:
 url: http://triangleidea.com
 date_format: "ordinal"
 title: ITriangle
-subtitle: "Do Myself"
+subtitle: "To become a programmer just because I like it, rather than life"
 description: "ITriangle的个人博客"
 keywords: 
 favicon: /favicon.ico
@@ -83,10 +83,10 @@ repository: ITriangle/itriangle.github.io
 #      Socials     #
 # ---------------- #
 github_username: ITriangle
-douban_username: ITriangle
-facebook_username: ITriangle
-weibo_username: ITriangle
 zhihu_username: ITriangle
+# weibo_username: ITriangle
+# douban_username: ITriangle
+# facebook_username: ITriangle
 twitter_username: ITriangle
 
 # ---------------- #
