@@ -32,9 +32,15 @@
 </a>
 {% endfor %}
 {% else %}
-{% for tag in site.tags %}
-    <a href="/show_by_tag.html?tag={{ tag[0] }}"> {{ tag[0] }}</a>
-{% endfor %}
+<div class="post-contents">
+      <i class="fa fa-tags">&nbsp;&nbsp; Tags</i><br>
+      <span class="label label-default">life ( 4 )</span><br>
+      <span class="label label-default">music ( 1 )</span><br>
+      <span class="label label-default">programming ( 10 )</span><br>
+      <span class="label label-default">spirituality ( 1 )</span><br>
+      <span class="label label-default">中文 ( 2 )</span><br>      
+      <span class="label label-default">language-learning ( 1 )</span><br>     
+</div>
 <h3>My Popular Connect</h3>
 <a href="#" target="_blank" onclick="window.open(&quot;https://www.baidu.com&quot;);" class="card text-center">
     <div class="thumbnail">
