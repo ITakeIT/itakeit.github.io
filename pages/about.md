@@ -16,6 +16,7 @@ permalink: /about/
 
 * 熟能生巧
 * 努力改变人生
+* 从小事做起
 
 ## 联系
 
@@ -27,14 +28,14 @@ permalink: /about/
 <!-- * 掘金：[@ITriangle](https://github.com/ITriangle) -->
 <!-- * LinkedIn：[@ITriangle](https://github.com/ITriangle) -->
 
-## Skill Keywords
+<!-- ## Skill Keywords -->
 
-#### Software Engineer Keywords
-<div class="btn-inline">
+<!-- #### Software Engineer Keywords -->
+<!-- <div class="btn-inline">
     {% for keyword in site.skill_software_keywords %}
     <button class="btn btn-outline" type="button">{{ keyword }}</button>
     {% endfor %}
-</div>
+</div> -->
 
 <!-- #### Mobile Developer Keywords
 <div class="btn-inline">
