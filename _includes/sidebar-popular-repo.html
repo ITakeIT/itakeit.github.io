@@ -32,6 +32,9 @@
 </a>
 {% endfor %}
 {% else %}
+{% for tag in site.tags %}
+    <a href="/show_by_tag.html?tag={{ tag[0] }}"> {{ tag[0] }}</a>
+{% endfor %}
 <h3>My Popular Connect</h3>
 <a href="#" target="_blank" onclick="window.open(&quot;https://www.baidu.com&quot;);" class="card text-center">
     <div class="thumbnail">
